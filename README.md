@@ -1,5 +1,7 @@
 # Yahoo Fantasy Basketball Start Lineup for the Week
 
+![Screenshot](/screenshot.PNG)
+
 ## Steps
 
 1. Install [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) or [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) (for Firefox or Chrome, respectively)
