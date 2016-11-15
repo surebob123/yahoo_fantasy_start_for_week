@@ -1,4 +1,4 @@
-// ==UserScript==
+tio// ==UserScript==
 // @name         Set Fantasy Basketball Lineup for the Week
 // @namespace    https://github.com/mingcn
 // @version      0.1
@@ -26,29 +26,21 @@
         var leagueID = url[2];
         var teamID = url[3];
 
-        // Get the Date of the Page being Viewed via Query String from URL and Assign to Variables
-        function getPageDate()
-        {
-            var vars = []
-            var hashes = window.location.search.substring(2).split('&');
-            for(var i = 0; i < hashes.length; i++)
-            {
-                var hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            //Get String Data from URL and convert to numbers to be assigned to Globals
-            if(vars['date'] !== undefined){
-                var dateArray = vars['date'].split('-');
-                year = Number(dateArray[0]); 
-                month = Number(dateArray[1]);
-                date = Number(dateArray[2]);
-            }
-            else{
-                console.log('date was not found')
-            }
+        // Get the Date of the Page being Viewed via Button Href Value and Assign to Variables
+    function PageDateObj(Pagehref){
+        function FindDate() {
+            var HrefURL = Pagehref.split('date=');
+            var HrefQueryString = HrefURL[1];
+            var HrefQueryVars = HrefQueryString.split('&');
+            var HrefQueryDate = HrefQueryVars[0].split('-');
+            return HrefQueryDate;
         }
-        getPageDate();
+        this.year = Number(FindDate()[0]);
+        this.month = Number(FindDate()[1]) + 1;
+        this.day = Number(FindDate()[2]);
+        }
+
+    var PageDate = new PageDateObj(startButton.attr('href');
 
         // Finding the crumb attribute, seems to be unique for each team. It's in the active players button href
         crumb = startButton.attr('href');
@@ -57,23 +49,18 @@
 
         // Getting the next 7 days of the week
         for(var i = 0; i < 7; i++) {
-            var nextDate = date + i;
-            dates.push(nextDate);
-        }
-            for(var i = 0; i < 7; i++) {
             //var currentDate = new Date();
             //currentDate.setDate(currentDate.getDate() + i);
-            var nextDate = date + i;
+            var nextDate = PageDate.day + i;
             dates.push(nextDate);
         }
 
         dates.forEach(startActivePlayersGet);
 
         function startActivePlayersGet(date) {
-            //year = date.getFullYear();
-            //month = date.getMonth() + 1;
-            //day = date.getDate();
-            month = month + 1
+            year = PageDate.year;
+            month = PageDate.month;
+            day = date;
 
             if (month.toString().length === 1) {
                 month = '0' + month;
