@@ -46,11 +46,11 @@
             day = date.getDate();
 
             if (month.toString().length === 1) {
-                newMonth = '0' + newMonth;
+                month = '0' + month;
             }
 
             if (day.toString().length === 1) {
-                newDay = '0' + newDay;
+                day = '0' + day;
             }
 
             shortDate = year + '-' + month + '-' + day;
