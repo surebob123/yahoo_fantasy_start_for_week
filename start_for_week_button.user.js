@@ -26,6 +26,30 @@
         var leagueID = url[2];
         var teamID = url[3];
 
+        // Get the Date of the Page being Viewed via Query String from URL and Assign to Variables
+        function getPageDate()
+        {
+            var vars = []
+            var hashes = window.location.search.substring(2).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                var hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            //Get String Data from URL and convert to numbers to be assigned to Globals
+            if(vars['date'] !== undefined){
+                var dateArray = vars['date'].split('-');
+                year = Number(dateArray[0]); 
+                month = Number(dateArray[1]);
+                date = Number(dateArray[2]);
+            }
+            else{
+                console.log('date was not found')
+            }
+        }
+        getPageDate();
+
         // Finding the crumb attribute, seems to be unique for each team. It's in the active players button href
         crumb = startButton.attr('href');
         crumb = crumb.split('crumb=');
@@ -33,17 +57,23 @@
 
         // Getting the next 7 days of the week
         for(var i = 0; i < 7; i++) {
-            var currentDate = new Date();
-            currentDate.setDate(currentDate.getDate() + i);
-            dates.push(currentDate);
+            var nextDate = date + i;
+            dates.push(nextDate);
+        }
+            for(var i = 0; i < 7; i++) {
+            //var currentDate = new Date();
+            //currentDate.setDate(currentDate.getDate() + i);
+            var nextDate = date + i;
+            dates.push(nextDate);
         }
 
         dates.forEach(startActivePlayersGet);
 
         function startActivePlayersGet(date) {
-            year = date.getFullYear();
-            month = date.getMonth() + 1;
-            day = date.getDate();
+            //year = date.getFullYear();
+            //month = date.getMonth() + 1;
+            //day = date.getDate();
+            month = month + 1
 
             if (month.toString().length === 1) {
                 month = '0' + month;
