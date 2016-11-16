@@ -26,6 +26,23 @@
         var leagueID = url[2];
         var teamID = url[3];
 
+        // Get the Date of the Page being Viewed via Button Href Value and Assign to Variables
+    function PageDateObj(Pagehref){
+        function FindDate() {
+            var HrefURL = Pagehref.split('date=');
+            var HrefQueryString = HrefURL[1];
+            var HrefQueryVars = HrefQueryString.split('&');
+            var HrefQueryDate = HrefQueryVars[0].split('-');
+            return HrefQueryDate;
+        }
+        this.date = FindDate();
+        this.year = Number(this.date[0]);
+        this.month = Number(this.date[1]);
+        this.day = Number(this.date[2]);
+        }
+
+    //var PageDate = new PageDateObj(startButton.attr('href');
+
         // Finding the crumb attribute, seems to be unique for each team. It's in the active players button href
         crumb = startButton.attr('href');
         crumb = crumb.split('crumb=');
@@ -33,7 +50,8 @@
 
         // Getting the next 7 days of the week
         for(var i = 0; i < 7; i++) {
-            var currentDate = new Date();
+            var newDate = new PageDateObj(startButton.attr('href');
+            var currentDate = new Date(newDate.year,newDate.month-1,newDate.day);
             currentDate.setDate(currentDate.getDate() + i);
             dates.push(currentDate);
         }
@@ -41,9 +59,9 @@
         dates.forEach(startActivePlayersGet);
 
         function startActivePlayersGet(date) {
-            year = date.getFullYear();
-            month = date.getMonth() + 1;
-            day = date.getDate();
+            year = date.year;
+            month = date.month;
+            day = date.day;
 
             if (month.toString().length === 1) {
                 month = '0' + month;
