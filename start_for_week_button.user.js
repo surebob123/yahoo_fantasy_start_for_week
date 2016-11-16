@@ -50,11 +50,10 @@
 
         // Getting the next 7 days of the week
         for(var i = 0; i < 7; i++) {
-            //var currentDate = new Date();
-            //currentDate.setDate(currentDate.getDate() + i);
-            var nextDate = new PageDateObj(startButton.attr('href');
-            nextDate.day = nextDate.day + i;
-            dates.push(nextDate);
+            var newDate = new PageDateObj(startButton.attr('href');
+            var currentDate = new Date(newDate.year,newDate.month-1,newDate.day);
+            currentDate.setDate(currentDate.getDate() + i);
+            dates.push(currentDate);
         }
 
         dates.forEach(startActivePlayersGet);
