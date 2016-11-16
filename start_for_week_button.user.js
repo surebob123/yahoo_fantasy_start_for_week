@@ -16,7 +16,7 @@
     startButton.after('<div class="Btn Btn-short Mend-med" id="startForWeekBtn">Start Active players for the next 7 days</div>');
     var newButton = $( "#startForWeekBtn" );
     newButton.click(function() {
-        var crumb, startActiveUrl, year, month, day, shortDate,
+        var crumb, startActiveUrl, year, month, day, shortDate, pageDate
         dates = [];
 
         // Get relevant URL information (didn't use window.location.toString because sometimes it includes other random paths depends on how you got to the team page)
@@ -27,31 +27,30 @@
         var teamID = url[3];
 
         // Get the Date of the Page being Viewed via Button Href Value and Assign to Variables
-    function PageDateObj(Pagehref){
-        function FindDate() {
-            var HrefURL = Pagehref.split('date=');
-            var HrefQueryString = HrefURL[1];
-            var HrefQueryVars = HrefQueryString.split('&');
-            var HrefQueryDate = HrefQueryVars[0].split('-');
-            return HrefQueryDate;
+        function pageDateObj(pageHref){
+            function findDate() {
+                var hrefUrl = pageHref.split('date=');
+                var hrefQueryString = hrefUrl[1];
+                var hrefQueryVars = hrefQueryString.split('&');
+                var hrefQueryDate = hrefQueryVars[0].split('-');
+                return hrefQueryDate;
+            }
+            this.date = findDate();
+            this.year = Number(this.date[0]);
+            this.month = Number(this.date[1]);
+            this.day = Number(this.date[2]);
         }
-        this.date = FindDate();
-        this.year = Number(this.date[0]);
-        this.month = Number(this.date[1]);
-        this.day = Number(this.date[2]);
-        }
-
-    //var PageDate = new PageDateObj(startButton.attr('href');
 
         // Finding the crumb attribute, seems to be unique for each team. It's in the active players button href
         crumb = startButton.attr('href');
         crumb = crumb.split('crumb=');
         crumb = crumb[1];
+        
+        pageDate = new pageDateObj(startButton.attr('href');
 
         // Getting the next 7 days of the week
         for(var i = 0; i < 7; i++) {
-            var newDate = new PageDateObj(startButton.attr('href');
-            var currentDate = new Date(newDate.year,newDate.month-1,newDate.day);
+            var currentDate = new Date(pageDate.year, pageDate.month-1, pageDate.day);
             currentDate.setDate(currentDate.getDate() + i);
             dates.push(currentDate);
         }
