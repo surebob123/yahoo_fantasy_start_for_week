@@ -1,4 +1,4 @@
-tio// ==UserScript==
+// ==UserScript==
 // @name         Set Fantasy Basketball Lineup for the Week
 // @namespace    https://github.com/mingcn
 // @version      0.1
@@ -35,12 +35,13 @@ tio// ==UserScript==
             var HrefQueryDate = HrefQueryVars[0].split('-');
             return HrefQueryDate;
         }
-        this.year = Number(FindDate()[0]);
-        this.month = Number(FindDate()[1]) + 1;
-        this.day = Number(FindDate()[2]);
+        this.date = FindDate();
+        this.year = Number(this.date[0]);
+        this.month = Number(this.date[1]);
+        this.day = Number(this.date[2]);
         }
 
-    var PageDate = new PageDateObj(startButton.attr('href');
+    //var PageDate = new PageDateObj(startButton.attr('href');
 
         // Finding the crumb attribute, seems to be unique for each team. It's in the active players button href
         crumb = startButton.attr('href');
@@ -51,16 +52,17 @@ tio// ==UserScript==
         for(var i = 0; i < 7; i++) {
             //var currentDate = new Date();
             //currentDate.setDate(currentDate.getDate() + i);
-            var nextDate = PageDate.day + i;
+            var nextDate = new PageDateObj(startButton.attr('href');
+            nextDate.day = nextDate.day + i;
             dates.push(nextDate);
         }
 
         dates.forEach(startActivePlayersGet);
 
         function startActivePlayersGet(date) {
-            year = PageDate.year;
-            month = PageDate.month;
-            day = date;
+            year = date.year;
+            month = date.month;
+            day = date.day;
 
             if (month.toString().length === 1) {
                 month = '0' + month;
