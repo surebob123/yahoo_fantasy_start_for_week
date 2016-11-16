@@ -13,19 +13,9 @@
     'use strict';
 
     var startButton = $( "a:contains('Start Active Players')" );
-    startButton.after('<div class="Btn Btn-short Mend-med" id="startForWeekBtn">Start Active players for the next 7 days</div>');
+    startButton.after('<div class="Btn Btn-short Mend-med" id="startForWeekBtn">Start Active players for the Week</div>');
     var newButton = $( "#startForWeekBtn" );
     newButton.click(function() {
-        var crumb, startActiveUrl, year, month, day, shortDate, pageDate
-        dates = [];
-
-        // Get relevant URL information (didn't use window.location.toString because sometimes it includes other random paths depends on how you got to the team page)
-        var url = window.location.pathname;
-        url = url.split('/');
-        var sport = url[1];
-        var leagueID = url[2];
-        var teamID = url[3];
-
         // Get the Date of the Page being Viewed via Button Href Value and Assign to Variables
         function pageDateObj(pageHref){
             function findDate() {
@@ -41,26 +31,11 @@
             this.day = Number(this.date[2]);
         }
 
-        // Finding the crumb attribute, seems to be unique for each team. It's in the active players button href
-        crumb = startButton.attr('href');
-        crumb = crumb.split('crumb=');
-        crumb = crumb[1];
-        
-        pageDate = new pageDateObj(startButton.attr('href');
-
-        // Getting the next 7 days of the week
-        for(var i = 0; i < 7; i++) {
-            var currentDate = new Date(pageDate.year, pageDate.month-1, pageDate.day);
-            currentDate.setDate(currentDate.getDate() + i);
-            dates.push(currentDate);
-        }
-
-        dates.forEach(startActivePlayersGet);
-
+        // Parses date values and creates a get request
         function startActivePlayersGet(date) {
-            year = date.year;
-            month = date.month;
-            day = date.day;
+            year = date.getFullYear();
+            month = date.getMonth() + 1; // need to add +1 to the month because javascript Date object is zero indexed
+            day = date.getDate();
 
             if (month.toString().length === 1) {
                 month = '0' + month;
@@ -76,6 +51,33 @@
             console.log ('Running command ' + startActiveUrl);
             $.get(startActiveUrl);
         }
+
+        var crumb, startActiveUrl, year, month, day, shortDate, pageDate, url, sport, leagueID, teamID,
+        dates = [];
+
+        // Get relevant URL information (didn't use window.location.toString because sometimes it includes other random paths depends on how you got to the team page)
+        url = window.location.pathname;
+        url = url.split('/');
+        sport = url[1];
+        leagueID = url[2];
+        teamID = url[3];
+
+        // Finding the crumb attribute, seems to be unique for each team. It's in the active players button href
+        crumb = startButton.attr('href');
+        crumb = crumb.split('crumb=');
+        crumb = crumb[1];
+
+        // Getting date information for the date of the team page you are viewing
+        pageDate = new pageDateObj(startButton.attr('href'));
+
+        // Getting the dates from the current page views to the next 6 days (one week)
+        for(var i = 0; i < 7; i++) {
+            var currentDate = new Date(pageDate.year, pageDate.month-1, pageDate.day);
+            currentDate.setDate(currentDate.getDate() + i);
+            dates.push(currentDate);
+        }
+
+        dates.forEach(startActivePlayersGet);
 
         location.reload();
     });
