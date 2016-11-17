@@ -18,6 +18,7 @@
     newButton.click(function() {
         // Get the Date of the Page being Viewed via Button Href Value and Assign to Variables
         function pageDateObj(pageHref){
+             /*jshint validthis: true */
             function findDate() {
                 var hrefUrl = pageHref.split('date=');
                 var hrefQueryString = hrefUrl[1];
