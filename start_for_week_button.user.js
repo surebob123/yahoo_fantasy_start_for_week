@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  A user script that will add a button to start your lineup for the next 7 days
 // @author       mingcn
-// @match        http://basketball.fantasysports.yahoo.com/*
+// @match        *//basketball.fantasysports.yahoo.com/*
 // @grant        none
 // @require http://code.jquery.com/jquery-latest.js
 // ==/UserScript==
@@ -60,6 +60,6 @@
             $.get(startActiveUrl);
         }
 
-        location.reload();
+        location.reload(true);
     });
 })();
