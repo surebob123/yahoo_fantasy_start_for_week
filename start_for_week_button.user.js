@@ -78,8 +78,8 @@
             dates.push(currentDate);
         }
 
-        dates.forEach(startActivePlayersGet);
+        $.when(dates.forEach(startActivePlayersGet)).done(location.reload());
 
-        location.reload();
+        
     });
 })();
